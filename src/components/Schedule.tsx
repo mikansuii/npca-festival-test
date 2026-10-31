@@ -1,4 +1,3 @@
-import { Clock, MapPin, CalendarDays } from 'lucide-react';
 import { scheduleItems } from '@/lib/data';
 
 export function Schedule() {
@@ -12,65 +11,45 @@ export function Schedule() {
   ];
 
   return (
-    <section id="schedule" className="relative py-24 bg-navy-50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-4">
-            <CalendarDays className="w-4 h-4 text-navy-500" />
-            <span className="text-navy-700 text-sm font-medium">イベントスケジュール</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black text-navy-900 mb-4">
-            2日間の<span className="gradient-text">タイムテーブル</span>
-          </h2>
-          <p className="text-navy-600 text-lg max-w-2xl mx-auto">
-            展示体験だけでなく、大会や技術トークショーも開催。ぜひ参加してください。
-          </p>
-        </div>
+    <section id="schedule" className="mb-16 scroll-mt-20">
+      <h2 className="text-2xl font-bold text-ink-900 mb-6 border-b border-ink-200 pb-2">
+        スケジュール
+      </h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {days.map((day, dayIdx) => (
-            <div key={day.label} className="rounded-2xl bg-white border border-navy-200 shadow-md p-6 md:p-8 animate-fade-in-up" style={{ animationDelay: `${dayIdx * 0.2}s` }}>
-              <div className="flex items-center gap-3 mb-6 pb-6 border-b border-navy-200">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-navy-500 to-navy-600 flex items-center justify-center text-white font-black text-lg">
-                  {dayIdx + 1}
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-navy-900">{day.label}</h3>
-                  <p className="text-navy-500 text-sm">{day.date}</p>
-                </div>
-              </div>
+      <p className="text-ink-700 leading-relaxed mb-8">
+        展示体験だけでなく、大会や技術トークショーも開催します。
+      </p>
 
-              <div className="space-y-4">
-                {day.items.map((item) => (
-                  <div
-                    key={item.id}
-                    className="group relative pl-6 border-l-2 border-navy-200 hover:border-navy-500 transition-colors"
-                  >
-                    <div className="absolute -left-[7px] top-1 w-3 h-3 rounded-full bg-navy-300 group-hover:bg-navy-500 transition-colors" />
-                    <div className="py-2">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Clock className="w-3.5 h-3.5 text-navy-400" />
-                        <span className="text-navy-700 text-sm font-mono">
-                          {item.startTime}{item.endTime ? ` - ${item.endTime}` : ''}
-                        </span>
-                      </div>
-                      <h4 className="text-navy-900 font-bold text-base mb-1">{item.title}</h4>
-                      {item.location && (
-                        <div className="flex items-center gap-1.5 mb-1">
-                          <MapPin className="w-3 h-3 text-navy-400" />
-                          <span className="text-navy-500 text-xs">{item.location}</span>
-                        </div>
-                      )}
-                      {item.description && (
-                        <p className="text-navy-600 text-sm leading-relaxed">{item.description}</p>
-                      )}
-                    </div>
+      <div className="space-y-10">
+        {days.map((day) => (
+          <div key={day.label}>
+            <h3 className="text-lg font-bold text-ink-900 mb-4">
+              {day.label}　{day.date}
+            </h3>
+            <div className="space-y-2">
+              {day.items.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex flex-col sm:flex-row gap-1 sm:gap-4 py-2 border-b border-ink-100"
+                >
+                  <div className="font-mono text-sm text-ink-500 sm:w-32 flex-shrink-0">
+                    {item.startTime}
+                    {item.endTime ? ` - ${item.endTime}` : ''}
                   </div>
-                ))}
-              </div>
+                  <div className="flex-1">
+                    <div className="font-medium text-ink-900">{item.title}</div>
+                    {item.location && (
+                      <div className="text-sm text-ink-500">{item.location}</div>
+                    )}
+                    {item.description && (
+                      <div className="text-sm text-ink-600 mt-1">{item.description}</div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </section>
   );

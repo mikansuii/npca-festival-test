@@ -10,7 +10,7 @@ import { ProjectDetail } from '@/components/ProjectDetail';
 
 function HomePage() {
   return (
-    <main>
+    <main className="max-w-3xl mx-auto px-6 py-16">
       <Hero />
       <Projects />
       <Members />
