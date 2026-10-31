@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
 import { Users, Star } from 'lucide-react';
-import { supabase, type Member } from '@/lib/supabase';
+import { members } from '@/lib/data';
 
 const avatarColors = [
   'from-navy-500 to-navy-600',
@@ -13,24 +12,7 @@ const avatarColors = [
 ];
 
 export function Members() {
-  const [members, setMembers] = useState<Member[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      const { data, error } = await supabase
-        .from('members')
-        .select('*')
-        .order('sort_order', { ascending: true });
-      if (error) {
-        setError(error.message);
-      } else if (data) {
-        setMembers(data as Member[]);
-      }
-      setLoading(false);
-    })();
-  }, []);
+  const sorted = [...members].sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
     <section id="members" className="relative py-24 bg-gradient-to-b from-navy-950 to-navy-900 overflow-hidden">
@@ -50,59 +32,45 @@ export function Members() {
           </p>
         </div>
 
-        {loading && (
-          <div className="flex justify-center py-20">
-            <div className="w-12 h-12 border-4 border-navy-700 border-t-navy-400 rounded-full animate-spin" />
-          </div>
-        )}
-
-        {error && (
-          <div className="text-center py-20">
-            <p className="text-red-400">データの読み込みに失敗しました: {error}</p>
-          </div>
-        )}
-
-        {!loading && !error && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {members.map((member, index) => {
-              const color = avatarColors[index % avatarColors.length];
-              const initials = member.name.replace(/\s/g, '').slice(0, 2);
-              return (
-                <div
-                  key={member.id}
-                  className="group rounded-2xl p-6 glass glow-border text-center transition-all duration-300 hover:-translate-y-2 animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white text-xl font-black shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    {initials}
-                  </div>
-
-                  {member.role && (
-                    <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold mb-2">
-                      <Star className="w-3 h-3" />
-                      {member.role}
-                    </div>
-                  )}
-
-                  <h3 className="text-lg font-bold text-white mb-1">{member.name}</h3>
-                  <p className="text-navy-300 text-sm mb-3">{member.grade}</p>
-
-                  {member.bio && (
-                    <p className="text-navy-400 text-xs leading-relaxed mb-3 line-clamp-3">
-                      {member.bio}
-                    </p>
-                  )}
-
-                  {member.favorite_tech && (
-                    <div className="inline-block px-3 py-1 rounded-md bg-navy-800/60 text-navy-200 text-xs font-mono font-medium">
-                      {member.favorite_tech}
-                    </div>
-                  )}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {sorted.map((member, index) => {
+            const color = avatarColors[index % avatarColors.length];
+            const initials = member.name.replace(/\s/g, '').slice(0, 2);
+            return (
+              <div
+                key={member.id}
+                className="group rounded-2xl p-6 glass glow-border text-center transition-all duration-300 hover:-translate-y-2 animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className={`w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center text-white text-xl font-black shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                  {initials}
                 </div>
-              );
-            })}
-          </div>
-        )}
+
+                {member.role && (
+                  <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gold-500/20 text-gold-300 text-xs font-bold mb-2">
+                    <Star className="w-3 h-3" />
+                    {member.role}
+                  </div>
+                )}
+
+                <h3 className="text-lg font-bold text-white mb-1">{member.name}</h3>
+                <p className="text-navy-300 text-sm mb-3">{member.grade}</p>
+
+                {member.bio && (
+                  <p className="text-navy-400 text-xs leading-relaxed mb-3 line-clamp-3">
+                    {member.bio}
+                  </p>
+                )}
+
+                {member.favoriteTech && (
+                  <div className="inline-block px-3 py-1 rounded-md bg-navy-800/60 text-navy-200 text-xs font-mono font-medium">
+                    {member.favoriteTech}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
