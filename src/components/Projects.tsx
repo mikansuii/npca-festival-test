@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Code2, Gamepad2, Brain, Globe, Cpu, Trophy } from 'lucide-react';
-import { projects, type Project } from '@/lib/data';
+import { Link } from 'react-router-dom';
+import { Code2, Gamepad2, Brain, Globe, Cpu, Trophy, ArrowRight } from 'lucide-react';
+import { projects } from '@/lib/data';
 
 const categoryIcons: Record<string, typeof Gamepad2> = {
   'ゲーム': Gamepad2,
@@ -64,9 +65,10 @@ export function Projects() {
             const Icon = categoryIcons[project.category] || Code2;
             const color = categoryColors[project.category] || 'from-navy-500 to-navy-600';
             return (
-              <div
+              <Link
                 key={project.id}
-                className="group relative rounded-2xl overflow-hidden glass glow-border transition-all duration-300 hover:-translate-y-2 animate-fade-in-up"
+                to={`/projects/${project.slug}`}
+                className="group relative rounded-2xl overflow-hidden glass glow-border transition-all duration-300 hover:-translate-y-2 animate-fade-in-up block"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {project.imageUrl && (
@@ -98,7 +100,7 @@ export function Projects() {
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {project.techStack.map((tech) => (
                       <span
                         key={tech}
@@ -108,8 +110,13 @@ export function Projects() {
                       </span>
                     ))}
                   </div>
+
+                  <div className="flex items-center gap-1.5 text-gold-400 text-sm font-bold group-hover:gap-3 transition-all">
+                    詳細を見る
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
