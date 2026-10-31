@@ -23,7 +23,7 @@ function HomePage() {
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-navy-950">
+      <div className="min-h-screen bg-white">
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />

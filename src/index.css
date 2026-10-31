@@ -17,29 +17,29 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #0d1240;
+  background: #eff6ff;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3a52f0;
+  background: #3b82f6;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #5f7bff;
+  background: #2563eb;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #5f7bff 0%, #92a8ff 50%, #edcd76 100%);
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 50%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.15);
 }
 
 .glow-border {
@@ -51,7 +51,7 @@ body {
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  background: linear-gradient(135deg, rgba(95, 123, 255, 0.5), rgba(237, 205, 118, 0.3));
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.3), rgba(6, 182, 212, 0.2));
   z-index: -1;
   opacity: 0;
   transition: opacity 0.3s ease;
