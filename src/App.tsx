@@ -3,7 +3,6 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Breadcrumb } from '@/components/Breadcrumb';
 import { PageTransition } from '@/components/PageTransition';
-import { CursorGlow } from '@/components/CursorGlow';
 import { Home } from '@/pages/Home';
 import { Exhibits } from '@/pages/Exhibits';
 import { Event } from '@/pages/Event';
@@ -15,8 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="relative min-h-screen">
-        <CursorGlow />
-        <div className="relative z-10">
+        <div>
           <Header />
           <Breadcrumb />
           <PageTransition>

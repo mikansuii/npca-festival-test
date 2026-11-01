@@ -6,8 +6,6 @@
 
 html {
   scroll-behavior: smooth;
-  --cursor-x: 50%;
-  --cursor-y: 50%;
 }
 
 body {
@@ -15,37 +13,6 @@ body {
   color: #212529;
   line-height: 1.75;
   background-color: #ffffff;
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: -1px -1px;
-  background-attachment: local;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(37, 99, 235, var(--glow-alpha, 0)) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(37, 99, 235, var(--glow-alpha, 0)) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-position: -1px -1px;
-  -webkit-mask-image: radial-gradient(
-    circle 160px at var(--cursor-x) var(--cursor-y),
-    #000 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    circle 160px at var(--cursor-x) var(--cursor-y),
-    #000 0%,
-    rgba(0, 0, 0, 0.4) 60%,
-    transparent 100%
-  );
 }
 
 ::-webkit-scrollbar {
