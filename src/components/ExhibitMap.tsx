@@ -2,12 +2,21 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { projects } from '@/lib/data';
 
-type ExhibitSpot = {
-  projectId: string;
+type MapRect = {
+  id: string;
   x: number;
   y: number;
   w: number;
   h: number;
+};
+
+type ExhibitSpot = MapRect & {
+  projectId: string;
+};
+
+type FacilitySpot = MapRect & {
+  label: string;
+  kind: 'reception' | 'exit' | 'board';
 };
 
 const categoryColors: Record<string, string> = {
@@ -17,16 +26,28 @@ const categoryColors: Record<string, string> = {
   'API': '#f39c12',
 };
 
-const spots: ExhibitSpot[] = [
-  { projectId: '1', x: 8, y: 12, w: 28, h: 18 },
-  { projectId: '2', x: 42, y: 12, w: 28, h: 18 },
-  { projectId: '3', x: 76, y: 12, w: 20, h: 18 },
-  { projectId: '4', x: 8, y: 38, w: 24, h: 18 },
-  { projectId: '5', x: 38, y: 38, w: 32, h: 18 },
-  { projectId: '6', x: 76, y: 38, w: 20, h: 18 },
-  { projectId: '7', x: 8, y: 64, w: 40, h: 20 },
-  { projectId: '8', x: 56, y: 64, w: 40, h: 20 },
+const exhibitSpots: ExhibitSpot[] = [
+  { id: 'spot-1', projectId: '1', x: 8, y: 14, w: 26, h: 16 },
+  { id: 'spot-2', projectId: '2', x: 38, y: 14, w: 26, h: 16 },
+  { id: 'spot-3', projectId: '3', x: 68, y: 14, w: 20, h: 16 },
+  { id: 'spot-4', projectId: '4', x: 8, y: 36, w: 22, h: 16 },
+  { id: 'spot-5', projectId: '5', x: 34, y: 36, w: 30, h: 16 },
+  { id: 'spot-6', projectId: '6', x: 68, y: 36, w: 20, h: 16 },
+  { id: 'spot-7', projectId: '7', x: 8, y: 58, w: 36, h: 18 },
+  { id: 'spot-8', projectId: '8', x: 48, y: 58, w: 32, h: 18 },
 ];
+
+const facilitySpots: FacilitySpot[] = [
+  { id: 'reception', label: '受付', kind: 'reception', x: 84, y: 82, w: 12, h: 10 },
+  { id: 'exit', label: '出口', kind: 'exit', x: 4, y: 82, w: 12, h: 10 },
+  { id: 'board', label: '黒板', kind: 'board', x: 30, y: 4, w: 40, h: 5 },
+];
+
+const facilityStyles: Record<FacilitySpot['kind'], { bg: string; border: string; text: string }> = {
+  reception: { bg: '#eaf2ff', border: '#3b82f6', text: '#1d4ed8' },
+  exit: { bg: '#fef3e8', border: '#f59e0b', text: '#b45309' },
+  board: { bg: '#2d2d2d', border: '#1a1a1a', text: '#e0e0e0' },
+};
 
 export function ExhibitMap() {
   const [hovered, setHovered] = useState<string | null>(null);
@@ -40,18 +61,42 @@ export function ExhibitMap() {
         {/* Building outline */}
         <div className="absolute inset-2 border-2 border-ink-300 rounded-md">
           {/* Floor label */}
-          <div className="absolute top-2 left-3 text-xs font-mono text-ink-400">
+          <div className="absolute top-1 left-3 text-xs font-mono text-ink-400 z-0">
             校舎2階 — PC研究部室
           </div>
 
-          {/* Corridor line */}
-          <div
-            className="absolute bg-ink-100"
-            style={{ left: '47%', top: '6%', width: '6%', height: '88%' }}
-          />
+          {/* Facility spots (rendered first, behind exhibits) */}
+          {facilitySpots.map((spot) => {
+            const style = facilityStyles[spot.kind];
+            const isHovered = hovered === spot.id;
+            return (
+              <div
+                key={spot.id}
+                className="absolute flex items-center justify-center text-center rounded transition-all duration-200"
+                style={{
+                  left: `${spot.x}%`,
+                  top: `${spot.y}%`,
+                  width: `${spot.w}%`,
+                  height: `${spot.h}%`,
+                  backgroundColor: style.bg,
+                  border: `1.5px solid ${style.border}`,
+                  opacity: isHovered ? 1 : 0.85,
+                }}
+                onMouseEnter={() => setHovered(spot.id)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <span
+                  className="text-xs font-bold leading-tight"
+                  style={{ color: style.text }}
+                >
+                  {spot.label}
+                </span>
+              </div>
+            );
+          })}
 
           {/* Exhibit spots */}
-          {spots.map((spot) => {
+          {exhibitSpots.map((spot) => {
             const project = projects.find((p) => p.id === spot.projectId);
             if (!project) return null;
             const color = categoryColors[project.category] || '#95a5a6';
@@ -88,26 +133,42 @@ export function ExhibitMap() {
 
         {/* Tooltip */}
         {hovered && (() => {
-          const spot = spots.find((s) => s.projectId === hovered);
+          const exhibitSpot = exhibitSpots.find((s) => s.projectId === hovered);
           const project = projects.find((p) => p.id === hovered);
-          if (!spot || !project) return null;
-          return (
-            <div
-              className="absolute z-20 pointer-events-none bg-ink-900 text-white text-sm rounded-lg px-3 py-2 shadow-xl whitespace-nowrap"
-              style={{
-                left: `${Math.min(spot.x + spot.w / 2, 70)}%`,
-                top: `${Math.max(spot.y - 4, 0)}%`,
-              }}
-            >
-              <div className="font-bold">{project.title}</div>
-              <div className="text-xs text-ink-300 mt-0.5">{project.category} — クリックで詳細</div>
-            </div>
-          );
+          if (exhibitSpot && project) {
+            return (
+              <div
+                className="absolute z-20 pointer-events-none bg-ink-900 text-white text-sm rounded-lg px-3 py-2 shadow-xl whitespace-nowrap"
+                style={{
+                  left: `${Math.min(exhibitSpot.x + exhibitSpot.w / 2, 70)}%`,
+                  top: `${Math.max(exhibitSpot.y - 4, 0)}%`,
+                }}
+              >
+                <div className="font-bold">{project.title}</div>
+                <div className="text-xs text-ink-300 mt-0.5">{project.category} — クリックで詳細</div>
+              </div>
+            );
+          }
+          const facility = facilitySpots.find((s) => s.id === hovered);
+          if (facility) {
+            return (
+              <div
+                className="absolute z-20 pointer-events-none bg-ink-900 text-white text-sm rounded-lg px-3 py-2 shadow-xl whitespace-nowrap"
+                style={{
+                  left: `${Math.min(facility.x + facility.w / 2, 70)}%`,
+                  top: `${Math.max(facility.y - 4, 0)}%`,
+                }}
+              >
+                <div className="font-bold">{facility.label}</div>
+              </div>
+            );
+          }
+          return null;
         })()}
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 mt-4 text-xs text-ink-600">
+      <div className="flex flex-wrap items-center gap-4 mt-4 text-xs text-ink-600">
         {Object.entries(categoryColors).map(([cat, color]) => (
           <div key={cat} className="flex items-center gap-1.5">
             <span
@@ -115,6 +176,16 @@ export function ExhibitMap() {
               style={{ backgroundColor: color }}
             />
             {cat}
+          </div>
+        ))}
+        <span className="text-ink-300">|</span>
+        {Object.entries(facilityStyles).map(([kind, style]) => (
+          <div key={kind} className="flex items-center gap-1.5">
+            <span
+              className="inline-block w-3 h-3 rounded border"
+              style={{ backgroundColor: style.bg, borderColor: style.border }}
+            />
+            {facilitySpots.find((s) => s.kind === kind as FacilitySpot['kind'])?.label}
           </div>
         ))}
       </div>
