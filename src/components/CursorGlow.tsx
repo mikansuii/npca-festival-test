@@ -8,7 +8,7 @@ export function CursorGlow() {
       raf = requestAnimationFrame(() => {
         document.documentElement.style.setProperty('--cursor-x', `${e.clientX}px`);
         document.documentElement.style.setProperty('--cursor-y', `${e.clientY}px`);
-        document.documentElement.style.setProperty('--glow-alpha', '0.5');
+        document.documentElement.style.setProperty('--glow-alpha', '0.35');
       });
     };
     const onLeave = () => {
