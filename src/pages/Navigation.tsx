@@ -1,4 +1,5 @@
 import { MapPin, Train, Clock } from 'lucide-react';
+import { ExhibitMap } from '@/components/ExhibitMap';
 
 export function Navigation() {
   return (
@@ -14,6 +15,14 @@ export function Navigation() {
           <br />
           パソコン解体やハッキング実演などのイベントも同室で行われます。
         </p>
+      </section>
+
+      <section className="mb-8">
+        <h2 className="text-xl font-bold text-ink-900 mb-2">展示配置図</h2>
+        <p className="text-ink-700 leading-relaxed mb-4">
+          PC研究部室内の展示配置です。各図形にカーソルを合わせると展示名が表示され、クリックすると詳細ページに移動します。
+        </p>
+        <ExhibitMap />
       </section>
 
       <section className="mb-8">
