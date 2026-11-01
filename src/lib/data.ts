@@ -363,6 +363,113 @@ export const scheduleItems: ScheduleItem[] = [
   },
 ];
 
+export type BushiArticle = {
+  id: string;
+  title: string;
+  writer: string;
+  summary: string;
+};
+
+export const bushiArticles: BushiArticle[] = [
+  {
+    id: '1',
+    title: 'discord に LINE のメッセージを転送する',
+    writer: 'akinyan',
+    summary: 'Discordのbotを用いてLINEのメッセージを自動転送するシステムの構築について解説します。',
+  },
+  {
+    id: '2',
+    title: '現代の暗号化の技術について',
+    writer: 'くま先生',
+    summary: '共通鍵暗号から公開鍵暗号まで、現代の暗号化技術の基礎と実装例を紹介します。',
+  },
+  {
+    id: '3',
+    title: 'Pandas で表を作ってみよう',
+    writer: 'NF23',
+    summary: 'Pythonのデータ分析ライブラリPandasを使って、データフレームの操作を学びます。',
+  },
+  {
+    id: '4',
+    title: 'Brainfuck の仕様やサンプルコード',
+    writer: 'KitKat',
+    summary: '難解プログラミング言語Brainfuckの仕様を解説し、実用的なサンプルコードを示します。',
+  },
+  {
+    id: '5',
+    title: 'Siv3D でゲームを作ってみよう',
+    writer: 'T.M',
+    summary: 'C++ゲームライブラリSiv3Dを使って、簡単な2Dゲームを制作する過程を紹介します。',
+  },
+  {
+    id: '6',
+    title: 'React2Shell（CVE-2025-55182）の検証',
+    writer: 'mikan0131',
+    summary: 'Reactのシェルインジェクション脆弱性について、検証と対策をまとめます。',
+  },
+  {
+    id: '7',
+    title: 'API の結果を Discord に送信する bot の開発',
+    writer: '山下航平',
+    summary: '外部APIの結果をDiscordチャンネルに自動投稿するbotの開発手法を解説します。',
+  },
+  {
+    id: '8',
+    title: 'Android のアプリを作ろう',
+    writer: 'ぱんだ',
+    summary: 'Kotlinを使ったAndroidアプリ開発の基礎から、簡単なアプリ完成までの流れを紹介します。',
+  },
+];
+
+export type EventItem = {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  location: string;
+  description: string;
+  grade: string;
+};
+
+export const events: EventItem[] = [
+  {
+    id: '1',
+    title: 'パソコン解体',
+    date: '11/3, 11/4 ともに',
+    time: '10:00 - 11:00',
+    location: 'PC研究部室',
+    description: '毎年恒例のパソコン解体ショーです。中学2年の部員が、部品の解説をしながらパソコンの解体と組み直しをします。',
+    grade: '中2部員',
+  },
+  {
+    id: '2',
+    title: 'ハッキング実演',
+    date: '11/3, 11/4 ともに',
+    time: '13:00 - 14:00',
+    location: 'PC研究部室',
+    description: '高校1年の部員が、Free Wi-Fiの通信やWebのログインシステムの脆弱性について解説します。',
+    grade: '高1部員',
+  },
+  {
+    id: '3',
+    title: 'AI対戦大会',
+    date: '11/3 のみ',
+    time: '13:00 - 14:00',
+    location: 'PC研究部室',
+    description: '部員が開発したオセロAIと来場者が対戦する大会。優勝者には景品をお渡しします！',
+    grade: '全学年',
+  },
+  {
+    id: '4',
+    title: 'タイピング大会',
+    date: '11/3 のみ',
+    time: '14:30 - 15:30',
+    location: 'PC研究部室',
+    description: 'Code Rushでタイピングスピードを競います。部員が書いたコードが問題として出題されます。',
+    grade: '全学年',
+  },
+];
+
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug);
 }

@@ -17,7 +17,7 @@ export function ProjectDetail() {
         <h1 className="text-2xl font-bold text-ink-900 mb-4">展示が見つかりません</h1>
         <p className="text-ink-600 mb-8">指定された展示は存在しないか、削除されています。</p>
         <Link
-          to="/#projects"
+          to="/exhibits"
           className="inline-flex items-center gap-2 text-blue-600 font-medium"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -34,7 +34,7 @@ export function ProjectDetail() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
       <Link
-        to="/#projects"
+        to="/exhibits"
         className="inline-flex items-center gap-1.5 text-sm text-ink-600 hover:text-ink-900 mb-6"
       >
         <ArrowLeft className="w-4 h-4" />
@@ -114,7 +114,7 @@ export function ProjectDetail() {
             {related.map((p) => (
               <Link
                 key={p.id}
-                to={`/projects/${p.slug}`}
+                to={`/exhibits/${p.slug}`}
                 className="block group hover:no-underline"
               >
                 <div className="flex items-center gap-3 py-2 border-b border-ink-100">

@@ -1,24 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from '@/components/Header';
-import { Hero } from '@/components/Hero';
-import { Projects } from '@/components/Projects';
-import { Members } from '@/components/Members';
-import { Schedule } from '@/components/Schedule';
-import { Access } from '@/components/Access';
 import { Footer } from '@/components/Footer';
-import { ProjectDetail } from '@/components/ProjectDetail';
-
-function HomePage() {
-  return (
-    <main className="max-w-3xl mx-auto px-6 py-16">
-      <Hero />
-      <Projects />
-      <Members />
-      <Schedule />
-      <Access />
-    </main>
-  );
-}
+import { Home } from '@/pages/Home';
+import { Exhibits } from '@/pages/Exhibits';
+import { Event } from '@/pages/Event';
+import { Navigation } from '@/pages/Navigation';
+import { Bushi } from '@/pages/Bushi';
+import { ProjectDetail } from '@/pages/ProjectDetail';
 
 function App() {
   return (
@@ -26,8 +14,12 @@ function App() {
       <div className="min-h-screen bg-white">
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/projects/:slug" element={<ProjectDetail />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/exhibits" element={<Exhibits />} />
+          <Route path="/exhibits/:slug" element={<ProjectDetail />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/navigation" element={<Navigation />} />
+          <Route path="/bushi" element={<Bushi />} />
         </Routes>
         <Footer />
       </div>

@@ -1,25 +1,25 @@
 import { Link } from 'react-router-dom';
 import { projects } from '@/lib/data';
 
-export function Projects() {
+export function Exhibits() {
   const sorted = [...projects].sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
-    <section id="projects" className="mb-16 scroll-mt-20">
-      <h2 className="text-2xl font-bold text-ink-900 mb-6 border-b border-ink-200 pb-2">
+    <main className="max-w-3xl mx-auto px-6 py-16">
+      <h1 className="text-3xl font-bold text-ink-900 mb-6 border-b border-ink-200 pb-4">
         展示
-      </h2>
+      </h1>
 
-      <p className="text-ink-700 leading-relaxed mb-8">
-        部員が作成したゲーム、AI、Webアプリなど、様々な展示を行っています！
-        展示の詳細は各ページをご覧ください。
+      <p className="text-ink-700 leading-relaxed mb-10">
+        PC研究部室でゲームやAI、Webアプリなど様々な展示を行っています！
+        各展示の詳細は各ページをご覧ください。
       </p>
 
       <div className="space-y-8">
         {sorted.map((project) => (
           <Link
             key={project.id}
-            to={`/projects/${project.slug}`}
+            to={`/exhibits/${project.slug}`}
             className="block group hover:no-underline"
           >
             <div className="flex flex-col sm:flex-row gap-4 pb-6 border-b border-ink-100">
@@ -61,6 +61,6 @@ export function Projects() {
           </Link>
         ))}
       </div>
-    </section>
+    </main>
   );
 }

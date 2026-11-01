@@ -1,23 +1,27 @@
 import { MapPin, Train, Clock } from 'lucide-react';
 
-export function Access() {
+export function Navigation() {
   return (
-    <section id="access" className="mb-16 scroll-mt-20">
-      <h2 className="text-2xl font-bold text-ink-900 mb-6 border-b border-ink-200 pb-2">
+    <main className="max-w-3xl mx-auto px-6 py-16">
+      <h1 className="text-3xl font-bold text-ink-900 mb-6 border-b border-ink-200 pb-4">
         場所
-      </h2>
+      </h1>
 
       <section className="mb-8">
-        <h3 className="text-lg font-bold text-ink-900 mb-2">場所</h3>
+        <h2 className="text-xl font-bold text-ink-900 mb-2">場所</h2>
         <p className="text-ink-700 leading-relaxed">
           パソコン部の展示はPC研究部室で行われています。
           <br />
-          AI対戦大会やタイピング大会などのイベントも同室で行われます。
+          パソコン解体やハッキング実演などのイベントも同室で行われます。
         </p>
       </section>
 
       <section className="mb-8">
-        <h3 className="text-lg font-bold text-ink-900 mb-2">地図</h3>
+        <h2 className="text-xl font-bold text-ink-900 mb-2">地図</h2>
+        <p className="text-ink-700 leading-relaxed mb-4">
+          PC研究部室は校舎2階にあります。
+          1階は中庭と同じ高さの階で、2階はスロープを上がってそのままの階です。お気を付けください。
+        </p>
         <div className="border border-ink-200 rounded overflow-hidden">
           <iframe
             src="https://www.google.com/maps?q=神戸市東灘区魚崎西町3-1-1+灘中学校高等学校&output=embed"
@@ -30,7 +34,7 @@ export function Access() {
       </section>
 
       <section className="mb-8">
-        <h3 className="text-lg font-bold text-ink-900 mb-3">アクセス</h3>
+        <h2 className="text-xl font-bold text-ink-900 mb-3">アクセス</h2>
         <ul className="space-y-1.5 text-ink-700">
           <li className="flex items-center gap-2">
             <Train className="w-4 h-4 text-ink-400 flex-shrink-0" />
@@ -48,7 +52,7 @@ export function Access() {
       </section>
 
       <section>
-        <h3 className="text-lg font-bold text-ink-900 mb-3">開催時間</h3>
+        <h2 className="text-xl font-bold text-ink-900 mb-3">開催時間</h2>
         <div className="flex items-start gap-2 text-ink-700">
           <Clock className="w-4 h-4 text-ink-400 flex-shrink-0 mt-1" />
           <div>
@@ -61,6 +65,6 @@ export function Access() {
           <div>PC研究部室は校舎2階でお待ちしています</div>
         </div>
       </section>
-    </section>
+    </main>
   );
 }
