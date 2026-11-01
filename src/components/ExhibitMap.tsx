@@ -37,17 +37,18 @@ const categoryColors: Record<string, string> = {
 };
 
 const exhibitSpots: ExhibitSpot[] = [
-  { id: 'spot-1', projectId: '1', x: 8, y: 18, w: 28, h: 20 },
-  { id: 'spot-2', projectId: '2', x: 42, y: 18, w: 28, h: 20 },
-  { id: 'spot-3', projectId: '3', x: 8, y: 48, w: 28, h: 20 },
-  { id: 'spot-4', projectId: '4', x: 42, y: 48, w: 28, h: 20 },
-  { id: 'spot-5', projectId: '5', x: 8, y: 76, w: 28, h: 14 },
+  { id: 'spot-1', projectId: '1', x: 40, y: 8, w: 50, h: 20 },
+  { id: 'spot-2', projectId: '2', x: 7, y: 8, w: 20, h: 20 },
+  { id: 'spot-3', projectId: '3', x: 7, y: 30, w: 10, h: 50 },
+  { id: 'spot-4', projectId: '4', x: 30, y: 40, w: 15, h: 20 },
+  { id: 'spot-5', projectId: '5', x: 30, y: 70, w: 28, h: 20 },
 ];
 
 const facilitySpots: FacilitySpot[] = [
-  { id: 'reception', label: '受付', kind: 'reception', x: 84, y: 82, w: 12, h: 10 },
-  { id: 'exit', label: '出口', kind: 'exit', x: 4, y: 82, w: 12, h: 10 },
-  { id: 'board', label: '黒板', kind: 'board', x: 93, y: 10, w: 5, h: 80 },
+  { id: 'reception', label: '受付', kind: 'reception', x: 75, y: 80, w: 5, h: 20 },
+  { id: 'exit', label: '出口', kind: 'exit', x: 4, y: 90, w: 12, h: 10 },
+  { id: 'board1', label: '黒板', kind: 'board', x: 95, y: 10, w: 5, h: 70 },
+  { id: 'board2', label: '黒板', kind: 'board', x: 0, y: 10, w: 5, h: 70 },
 ];
 
 const facilityStyles: Record<FacilitySpot['kind'], { bg: string; border: string; text: string }> = {

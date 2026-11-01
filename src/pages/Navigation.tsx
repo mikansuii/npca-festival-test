@@ -28,13 +28,12 @@ export function Navigation() {
       <section className="mb-8">
         <h2 className="text-xl font-bold text-ink-900 mb-2">地図</h2>
         <p className="text-ink-700 leading-relaxed mb-4">
-          PC研究部室は校舎2階にあります。
-          1階は中庭と同じ高さの階で、2階はスロープを上がってそのままの階です。お気を付けください。
+          パソコン研究部ブースは高校棟の二階、H3-2教室にあります。正門からスロープを登って、そのまま職員室前を通り、左に曲がると右手に見えます。
         </p>
         <div className="border border-ink-200 rounded overflow-hidden">
-          <iframe
-            src="https://www.google.com/maps?q=神戸市東灘区魚崎西町3-1-1+灘中学校高等学校&output=embed"
-            className="w-full h-[300px]"
+          <img
+            src="public\Layout.png"
+            className="w-full"
             style={{ border: 0 }}
             loading="lazy"
             title="灘校 地図"

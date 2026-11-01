@@ -12,7 +12,7 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-ink-200">
       <nav className="max-w-3xl mx-auto px-6 py-3 flex items-center justify-between">
         <Link to="/" className="text-ink-900 font-bold text-sm hover:no-underline">
-          灘校パソコン研究部 文化祭2027
+          灘校パソコン研究部 文化祭2027特設サイト
         </Link>
 
         <ul className="hidden md:flex items-center gap-6">

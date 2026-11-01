@@ -7,6 +7,8 @@ export function Footer() {
             <a href="https://npca.jp/" className="font-medium">NPCA公式サイト</a>
             <span className="mx-2 text-ink-300">|</span>
             <a href="https://twitter.com/ND_NPCA/">Twitter</a>
+            <span className="mx-2 text-ink-300">|</span>
+            <a href="https://fest80.nada-sc.jp/">文化祭公式サイト</a>
           </div>
           <div className="text-ink-400 font-mono text-xs">
             © 2026 灘校パソコン研究部

@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#0d1240"/>
-  <text x="50" y="68" font-family="monospace" font-size="48" font-weight="bold" fill="#5f7bff" text-anchor="middle">PC</text>
-  <circle cx="50" cy="50" r="42" fill="none" stroke="#edcd76" stroke-width="2" opacity="0.4"/>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 15.0.2, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="800px" height="600px" viewBox="0 0 800 600" enable-background="new 0 0 800 600" xml:space="preserve">
+<path fill="#0F42C2" d="M353.223,124.5c-89.511,0-161.175,74.669-161.175,164.185v224.811h127.218V328.889
+	c0-84.756,67.857-155.458,152.612-155.458h6.41v340.065h129.665V124.5H353.223z"/>
 </svg>
