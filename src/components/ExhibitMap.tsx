@@ -1,7 +1,23 @@
-import { useRef, useState, type PointerEvent } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { type ExhibitSpot, type FacilitySpot } from '@/lib/festivalData';
-import { useFestivalData } from '@/lib/useFestivalData';
+import { projects } from '@/lib/data';
+
+type MapRect = {
+  id: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
+
+type ExhibitSpot = MapRect & {
+  projectId: string;
+};
+
+type FacilitySpot = MapRect & {
+  label: string;
+  kind: 'reception' | 'exit' | 'board';
+};
 
 type FlowPath = {
   d: string;
@@ -20,53 +36,28 @@ const categoryColors: Record<string, string> = {
   'クイズ': '#9b59b6',
 };
 
+const exhibitSpots: ExhibitSpot[] = [
+  { id: 'spot-1', projectId: '1', x: 8, y: 18, w: 28, h: 20 },
+  { id: 'spot-2', projectId: '2', x: 42, y: 18, w: 28, h: 20 },
+  { id: 'spot-3', projectId: '3', x: 8, y: 48, w: 28, h: 20 },
+  { id: 'spot-4', projectId: '4', x: 42, y: 48, w: 28, h: 20 },
+  { id: 'spot-5', projectId: '5', x: 8, y: 76, w: 28, h: 14 },
+];
+
+const facilitySpots: FacilitySpot[] = [
+  { id: 'reception', label: '受付', kind: 'reception', x: 84, y: 82, w: 12, h: 10 },
+  { id: 'exit', label: '出口', kind: 'exit', x: 4, y: 82, w: 12, h: 10 },
+  { id: 'board', label: '黒板', kind: 'board', x: 93, y: 10, w: 5, h: 80 },
+];
+
 const facilityStyles: Record<FacilitySpot['kind'], { bg: string; border: string; text: string }> = {
   reception: { bg: '#eaf2ff', border: '#3b82f6', text: '#1d4ed8' },
   exit: { bg: '#fef3e8', border: '#f59e0b', text: '#b45309' },
   board: { bg: '#2d2d2d', border: '#1a1a1a', text: '#e0e0e0' },
 };
 
-type ExhibitMapProps = {
-  editable?: boolean;
-  selectedSpotId?: string | null;
-  onSelectSpot?: (type: 'exhibit' | 'facility', id: string) => void;
-};
-
-export function ExhibitMap({ editable = false, selectedSpotId = null, onSelectSpot }: ExhibitMapProps) {
+export function ExhibitMap() {
   const [hovered, setHovered] = useState<string | null>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
-  const dragRef = useRef<{ type: 'exhibit' | 'facility'; id: string; offsetX: number; offsetY: number } | null>(null);
-  const { projects, exhibitSpots, facilitySpots, setExhibitSpots, setFacilitySpots } = useFestivalData();
-
-  const startDrag = (event: PointerEvent<HTMLDivElement>, type: 'exhibit' | 'facility', id: string, spot: ExhibitSpot | FacilitySpot) => {
-    if (!editable || !mapRef.current) return;
-    const bounds = mapRef.current.getBoundingClientRect();
-    dragRef.current = {
-      type,
-      id,
-      offsetX: (event.clientX - bounds.left) / bounds.width - spot.x / 100,
-      offsetY: (event.clientY - bounds.top) / bounds.height - spot.y / 100,
-    };
-    event.currentTarget.setPointerCapture(event.pointerId);
-    onSelectSpot?.(type, id);
-  };
-
-  const moveSpot = (event: PointerEvent<HTMLDivElement>) => {
-    const drag = dragRef.current;
-    if (!editable || !drag || !mapRef.current) return;
-    const bounds = mapRef.current.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width - drag.offsetX) * 100;
-    const y = ((event.clientY - bounds.top) / bounds.height - drag.offsetY) * 100;
-    if (drag.type === 'exhibit') {
-      setExhibitSpots(exhibitSpots.map((spot) => spot.id === drag.id
-        ? { ...spot, x: Math.max(0, Math.min(100 - spot.w, x)), y: Math.max(0, Math.min(100 - spot.h, y)) }
-        : spot));
-    } else {
-      setFacilitySpots(facilitySpots.map((spot) => spot.id === drag.id
-        ? { ...spot, x: Math.max(0, Math.min(100 - spot.w, x)), y: Math.max(0, Math.min(100 - spot.h, y)) }
-        : spot));
-    }
-  };
 
   return (
     <div className="relative w-full" style={{ aspectRatio: '16 / 9' }}>
@@ -75,7 +66,7 @@ export function ExhibitMap({ editable = false, selectedSpotId = null, onSelectSp
         style={{ aspectRatio: '16 / 9' }}
       >
         {/* Building outline */}
-        <div ref={mapRef} className="absolute inset-2 border-2 border-ink-300 rounded-md">
+        <div className="absolute inset-2 border-2 border-ink-300 rounded-md">
           {/* Floor label */}
           <div className="absolute top-1 left-3 text-xs font-mono text-ink-400 z-0">
             校舎2階 — PC研究部室
@@ -97,16 +88,9 @@ export function ExhibitMap({ editable = false, selectedSpotId = null, onSelectSp
                   backgroundColor: style.bg,
                   border: `1.5px solid ${style.border}`,
                   opacity: isHovered ? 1 : 0.85,
-                  cursor: editable ? 'grab' : undefined,
-                  touchAction: editable ? 'none' : undefined,
-                  outline: selectedSpotId === spot.id ? '2px solid #111827' : undefined,
                 }}
                 onMouseEnter={() => setHovered(spot.id)}
                 onMouseLeave={() => setHovered(null)}
-                onPointerDown={(event) => startDrag(event, 'facility', spot.id, spot)}
-                onPointerMove={moveSpot}
-                onPointerUp={() => { dragRef.current = null; }}
-                onClick={() => editable && onSelectSpot?.('facility', spot.id)}
               >
                 <span
                   className="text-xs font-bold leading-tight"
@@ -156,8 +140,12 @@ export function ExhibitMap({ editable = false, selectedSpotId = null, onSelectSp
             if (!project) return null;
             const color = categoryColors[project.category] || '#95a5a6';
             const isHovered = hovered === spot.projectId;
-            const itemClass = 'absolute rounded-md flex items-center justify-center text-center transition-all duration-200 hover:z-10 hover:shadow-lg';
-            const itemStyle = {
+            return (
+              <Link
+                key={spot.projectId}
+                to={`/exhibits/${project.slug}`}
+                className="absolute rounded-md flex items-center justify-center text-center transition-all duration-200 hover:z-10 hover:shadow-lg"
+                style={{
                   left: `${spot.x}%`,
                   top: `${spot.y}%`,
                   width: `${spot.w}%`,
@@ -165,33 +153,18 @@ export function ExhibitMap({ editable = false, selectedSpotId = null, onSelectSp
                   backgroundColor: color,
                   opacity: isHovered ? 0.95 : 0.55,
                   transform: isHovered ? 'scale(1.03)' : 'scale(1)',
-                  cursor: editable ? 'grab' : undefined,
-                  touchAction: editable ? 'none' as const : undefined,
-                  outline: selectedSpotId === spot.id ? '2px solid #111827' : undefined,
-                };
-            const itemContent = (
-              <div className="px-1">
-                <div className="text-xs font-mono text-white/70 leading-none mb-0.5">
-                  No.{project.sortOrder}
+                }}
+                onMouseEnter={() => setHovered(spot.projectId)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                <div className="px-1">
+                  <div className="text-xs font-mono text-white/70 leading-none mb-0.5">
+                    No.{project.sortOrder}
+                  </div>
+                  <div className="text-xs font-bold text-white leading-tight">
+                    {project.title}
+                  </div>
                 </div>
-                <div className="text-xs font-bold text-white leading-tight">
-                  {project.title}
-                </div>
-              </div>
-            );
-            const pointerProps = {
-              onMouseEnter: () => setHovered(spot.projectId),
-              onMouseLeave: () => setHovered(null),
-                onPointerDown: (event: PointerEvent<HTMLDivElement>) => startDrag(event, 'exhibit', spot.id, spot),
-                onPointerMove: moveSpot,
-                onPointerUp: () => { dragRef.current = null; },
-                onClick: () => editable && onSelectSpot?.('exhibit', spot.id),
-              };
-            return editable ? (
-              <div key={spot.id} className={itemClass} style={itemStyle} {...pointerProps}>{itemContent}</div>
-            ) : (
-              <Link key={spot.id} to={`/exhibits/${project.slug}`} className={itemClass} style={itemStyle} onMouseEnter={pointerProps.onMouseEnter} onMouseLeave={pointerProps.onMouseLeave}>
-                {itemContent}
               </Link>
             );
           })}
