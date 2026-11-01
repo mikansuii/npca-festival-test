@@ -14,7 +14,7 @@ import { ProjectDetail } from '@/pages/ProjectDetail';
 function App() {
   return (
     <BrowserRouter>
-      <div className="relative min-h-screen bg-white">
+      <div className="relative min-h-screen">
         <CursorGlow />
         <div className="relative z-10">
           <Header />
