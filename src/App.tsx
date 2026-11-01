@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Breadcrumb } from '@/components/Breadcrumb';
 import { Home } from '@/pages/Home';
 import { Exhibits } from '@/pages/Exhibits';
 import { Event } from '@/pages/Event';
@@ -13,6 +14,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-screen bg-white">
         <Header />
+        <Breadcrumb />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/exhibits" element={<Exhibits />} />
