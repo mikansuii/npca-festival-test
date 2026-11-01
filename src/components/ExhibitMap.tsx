@@ -40,7 +40,7 @@ const exhibitSpots: ExhibitSpot[] = [
 const facilitySpots: FacilitySpot[] = [
   { id: 'reception', label: '受付', kind: 'reception', x: 84, y: 82, w: 12, h: 10 },
   { id: 'exit', label: '出口', kind: 'exit', x: 4, y: 82, w: 12, h: 10 },
-  { id: 'board', label: '黒板', kind: 'board', x: 95, y: 30, w: 5, h: 40 },
+  { id: 'board', label: '黒板', kind: 'board', x: 90, y: 30, w: 5, h: 40 },
 ];
 
 const facilityStyles: Record<FacilitySpot['kind'], { bg: string; border: string; text: string }> = {
