@@ -7,6 +7,7 @@ const routeNames: Record<string, string> = {
   '/event': 'ステージ企画',
   '/navigation': '場所',
   '/bushi': '部誌',
+  '/admin': '管理',
 };
 
 export function Breadcrumb() {

@@ -6,13 +6,45 @@
 
 html {
   scroll-behavior: smooth;
+  --cursor-x: 50%;
+  --cursor-y: 50%;
 }
 
 body {
   font-family: 'Noto Sans JP', sans-serif;
   color: #212529;
-  background: #ffffff;
   line-height: 1.75;
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(37, 99, 235, var(--glow-alpha, 0)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, var(--glow-alpha, 0)) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-position: -1px -1px;
+  -webkit-mask-image: radial-gradient(
+    circle 220px at var(--cursor-x) var(--cursor-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 220px at var(--cursor-x) var(--cursor-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.5) 50%,
+    transparent 100%
+  );
 }
 
 ::-webkit-scrollbar {
@@ -35,8 +67,29 @@ body {
 a {
   color: #1a73e8;
   text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease, color 0.2s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  background-size: 100% 1.5px;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: pageEnter 0.4s ease-out;
 }

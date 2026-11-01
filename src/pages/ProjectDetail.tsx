@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { getProjectBySlug, projects } from '@/lib/data';
+import { useFestivalData } from '@/lib/useFestivalData';
 
 export function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
-  const project = slug ? getProjectBySlug(slug) : undefined;
+  const { projects } = useFestivalData();
+  const project = slug ? projects.find((item) => item.slug === slug) : undefined;
 
   useEffect(() => {
     window.scrollTo(0, 0);

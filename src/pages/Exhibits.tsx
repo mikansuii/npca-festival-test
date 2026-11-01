@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { projects } from '@/lib/data';
+import { useFestivalData } from '@/lib/useFestivalData';
 
 export function Exhibits() {
   const [activeCategory, setActiveCategory] = useState<string>('すべて');
+  const { projects } = useFestivalData();
 
   const sorted = [...projects].sort((a, b) => a.sortOrder - b.sortOrder);
   const categories = ['すべて', ...new Set(sorted.map((p) => p.category))];
